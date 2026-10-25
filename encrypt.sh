@@ -9,10 +9,8 @@ if [[ "$plaintext" != "$plaintext2" ]]; then
     exit 1
 fi
 
-read -rsp "Passphrase : " passphrase
-echo
-read -rsp "Confirme la passphrase : " passphrase2
-echo
+read -rp "Passphrase : " passphrase
+read -rp "Confirme la passphrase : " passphrase2
 
 if [[ "$passphrase" != "$passphrase2" ]]; then
     echo "Les passphrases ne correspondent pas." >&2
