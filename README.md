@@ -1,40 +1,40 @@
 # paper-crypt
 
-Deux scripts bash pour chiffrer un texte et le garder sur papier plutôt que dans le cloud.
+Two bash scripts to encrypt text and keep it on paper instead of in the cloud.
 
-- `encrypt.sh` demande un texte et une passphrase, et affiche le résultat chiffré sous forme d'une seule ligne base64, assez courte pour être recopiée à la main.
-- `decrypt.sh` demande ce texte chiffré et la passphrase, et retrouve le texte original.
+- `encrypt.sh` asks for a text and a passphrase, and prints the encrypted result as a single base64 line, short enough to copy by hand.
+- `decrypt.sh` asks for that encrypted text and the passphrase, and recovers the original text.
 
-## Prérequis
+## Requirements
 
 - `bash`
 - `openssl`
 
-## Utilisation
+## Usage
 
 ```sh
 ./encrypt.sh
-# Texte à chiffrer : mon secret
-# Passphrase : ********
-# Confirme la passphrase : ********
+# Text to encrypt: my secret
+# Passphrase: ********
+# Confirm passphrase: ********
 #
-# Texte chiffré (à recopier sur papier) :
+# Encrypted text (copy it onto paper):
 # U2FsdGVkX1+uvC36MAYj/j0FTVzdy/hvtp64iowEUYG0hsov1sEE/jbLy5btpRF5
 ```
 
 ```sh
 ./decrypt.sh
-# Texte chiffré : U2FsdGVkX1+uvC36MAYj/j0FTVzdy/hvtp64iowEUYG0hsov1sEE/jbLy5btpRF5
-# Passphrase : ********
+# Encrypted text: U2FsdGVkX1+uvC36MAYj/j0FTVzdy/hvtp64iowEUYG0hsov1sEE/jbLy5btpRF5
+# Passphrase: ********
 #
-# Texte déchiffré :
-# mon secret
+# Decrypted text:
+# my secret
 ```
 
-## Détails techniques
+## Technical details
 
-- Chiffrement AES-256-CBC via OpenSSL, dérivation de clé PBKDF2 (200000 itérations), sel aléatoire.
-- Sortie encodée en base64 sur une seule ligne (pas de retours à la ligne), pour rester copiable à la main.
-- La passphrase est transmise à `openssl` via un descripteur de fichier plutôt qu'en argument, pour ne pas apparaître dans la liste des processus (`ps`).
+- AES-256-CBC encryption via OpenSSL, PBKDF2 key derivation (200000 iterations), random salt.
+- Output base64-encoded on a single line (no line breaks), so it stays copyable by hand.
+- The passphrase is passed to `openssl` via a file descriptor rather than as an argument, so it never appears in the process list (`ps`).
 
-Sans la passphrase exacte, le texte chiffré est inutilisable : il n'y a aucun moyen de le retrouver.
+Without the exact passphrase, the encrypted text is useless: there is no way to recover it.

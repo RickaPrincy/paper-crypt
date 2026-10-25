@@ -1,15 +1,15 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-read -rp "Texte chiffré : " ciphertext
-read -rp "Passphrase : " passphrase
+read -rp "Encrypted text: " ciphertext
+read -rp "Passphrase: " passphrase
 
 if ! plaintext=$(printf '%s' "$ciphertext" \
     | openssl enc -d -aes-256-cbc -pbkdf2 -iter 200000 -base64 -A -pass fd:3 3<<<"$passphrase" 2>/dev/null); then
-    echo "Échec du déchiffrement (mauvaise passphrase ou texte corrompu)." >&2
+    echo "Decryption failed (wrong passphrase or corrupted text)." >&2
     exit 1
 fi
 
 echo
-echo "Texte déchiffré :"
+echo "Decrypted text:"
 echo "$plaintext"

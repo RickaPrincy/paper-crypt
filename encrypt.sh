@@ -1,19 +1,19 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-read -rp "Texte à chiffrer : " plaintext
-read -rp "Confirme le texte à chiffrer : " plaintext2
+read -rp "Text to encrypt: " plaintext
+read -rp "Confirm text to encrypt: " plaintext2
 
 if [[ "$plaintext" != "$plaintext2" ]]; then
-    echo "Les textes ne correspondent pas." >&2
+    echo "Texts do not match." >&2
     exit 1
 fi
 
-read -rp "Passphrase : " passphrase
-read -rp "Confirme la passphrase : " passphrase2
+read -rp "Passphrase: " passphrase
+read -rp "Confirm passphrase: " passphrase2
 
 if [[ "$passphrase" != "$passphrase2" ]]; then
-    echo "Les passphrases ne correspondent pas." >&2
+    echo "Passphrases do not match." >&2
     exit 1
 fi
 
@@ -21,5 +21,5 @@ ciphertext=$(printf '%s' "$plaintext" \
     | openssl enc -aes-256-cbc -pbkdf2 -iter 200000 -salt -base64 -A -pass fd:3 3<<<"$passphrase")
 
 echo
-echo "Texte chiffré (à recopier sur papier) :"
+echo "Encrypted text (copy it onto paper):"
 echo "$ciphertext"
