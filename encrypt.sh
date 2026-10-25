@@ -2,6 +2,13 @@
 set -euo pipefail
 
 read -rp "Texte à chiffrer : " plaintext
+read -rp "Confirme le texte à chiffrer : " plaintext2
+
+if [[ "$plaintext" != "$plaintext2" ]]; then
+    echo "Les textes ne correspondent pas." >&2
+    exit 1
+fi
+
 read -rsp "Passphrase : " passphrase
 echo
 read -rsp "Confirme la passphrase : " passphrase2
